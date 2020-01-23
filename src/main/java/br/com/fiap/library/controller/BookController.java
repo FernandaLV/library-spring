@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.awt.print.Book;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,4 +79,12 @@ public class BookController {
 
         return bookDTO;
     }
+
+    @PatchMapping("{id}")
+    public BookDTO update(@PathVariable Integer id, @RequestBody AutorDTO autorDTO){
+        BookDTO bookDTO = findById(id);
+        bookDTO.setAutor(autorDTO);
+        return bookDTO;
+    }
+
 }

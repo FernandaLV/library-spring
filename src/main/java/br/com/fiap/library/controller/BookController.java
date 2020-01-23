@@ -2,10 +2,9 @@ package br.com.fiap.library.controller;
 
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -16,9 +15,9 @@ import java.util.stream.Collectors;
 @RequestMapping("books")
 public class BookController {
 
-    @GetMapping
-    public List<BookDTO> getAll(@RequestParam(required = false, value = "title") String titulo){
-        List<BookDTO> bookDTOList = new ArrayList<>();
+    List<BookDTO> bookDTOList = new ArrayList<>();
+
+    public BookController(){
         bookDTOList.add(new BookDTO(
                 1,
                 "O Guia do Mochileiro das Galaxias",
@@ -43,9 +42,20 @@ public class BookController {
                 ZonedDateTime.now().minusYears(40),
                 new AutorDTO()
         ));
+    }
 
+    @GetMapping
+    public List<BookDTO> getAll(@RequestParam(required = false, value = "title") String titulo){
         return bookDTOList.stream()
                 .filter(bookDTO -> titulo== null || bookDTO.getTitulo().startsWith(titulo))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("{id}")
+    public BookDTO findById(@PathVariable Integer id){
+        return bookDTOList.stream()
+                .filter(bookDTO -> bookDTO.getId().equals(id))
+                .findFirst()
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

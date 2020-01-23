@@ -11,6 +11,17 @@ public class BookDTO {
     private ZonedDateTime dataLancamento;
     private AutorDTO autor;
 
+    public BookDTO(){}
+
+    public BookDTO(Integer id, String titulo, Integer quantidadeDePaginas, String ISBN, ZonedDateTime dataLancamento, AutorDTO autor) {
+        this.id = id;
+        this.titulo = titulo;
+        this.quantidadeDePaginas = quantidadeDePaginas;
+        this.ISBN = ISBN;
+        this.dataLancamento = dataLancamento;
+        this.autor = autor;
+    }
+
     public Integer getId() {
         return id;
     }

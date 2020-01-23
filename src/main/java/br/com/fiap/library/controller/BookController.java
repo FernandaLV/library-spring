@@ -61,6 +61,7 @@ public class BookController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public BookDTO create(@RequestBody CreateBookDTO createBookDTO){
         BookDTO bookDTO = new BookDTO(createBookDTO, bookDTOList.size() + 1);
         bookDTOList.add(bookDTO);

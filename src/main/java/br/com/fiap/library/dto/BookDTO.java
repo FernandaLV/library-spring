@@ -22,6 +22,14 @@ public class BookDTO {
         this.autor = autor;
     }
 
+    public BookDTO(CreateBookDTO createBookDTO, Integer id) {
+        this.id = id;
+        this.titulo = createBookDTO.getTitulo();
+        this.quantidadeDePaginas = createBookDTO.getQuantidadeDePaginas();
+        this.ISBN = createBookDTO.getISBN();
+        this.dataLancamento = createBookDTO.getDataLancamento();
+    }
+
     public Integer getId() {
         return id;
     }

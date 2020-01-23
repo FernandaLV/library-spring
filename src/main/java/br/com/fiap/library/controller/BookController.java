@@ -2,6 +2,7 @@ package br.com.fiap.library.controller;
 
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
+import br.com.fiap.library.dto.CreateBookDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -57,5 +58,12 @@ public class BookController {
                 .filter(bookDTO -> bookDTO.getId().equals(id))
                 .findFirst()
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping
+    public BookDTO create(@RequestBody CreateBookDTO createBookDTO){
+        BookDTO bookDTO = new BookDTO(createBookDTO, bookDTOList.size() + 1);
+        bookDTOList.add(bookDTO);
+        return bookDTO;
     }
 }

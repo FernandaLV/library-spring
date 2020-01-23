@@ -66,4 +66,16 @@ public class BookController {
         bookDTOList.add(bookDTO);
         return bookDTO;
     }
+
+    @PutMapping("{id}")
+    public BookDTO update(@PathVariable Integer id, @RequestBody CreateBookDTO createBookDTO){
+
+        BookDTO bookDTO = findById(id);
+        bookDTO.setTitulo(createBookDTO.getTitulo());
+        bookDTO.setDataLancamento(createBookDTO.getDataLancamento());
+        bookDTO.setQuantidadeDePaginas(createBookDTO.getQuantidadeDePaginas());
+        bookDTO.setISBN(createBookDTO.getISBN());
+
+        return bookDTO;
+    }
 }

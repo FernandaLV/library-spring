@@ -1,7 +1,5 @@
 package br.com.fiap.library.dto;
 
-import br.com.fiap.library.dto.AutorDTO;
-
 import java.time.ZonedDateTime;
 
 public class BookDTO {

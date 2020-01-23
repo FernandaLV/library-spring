@@ -86,4 +86,10 @@ public class BookController {
         return bookDTO;
     }
 
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id){
+        BookDTO bookDTO = findById(id);
+        bookDTOList.remove(bookDTO);
+    }
+
 }

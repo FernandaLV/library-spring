@@ -2,13 +2,20 @@ package br.com.fiap.library;
 
 import br.com.fiap.library.controller.BookController;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BookControllerTest {
 
     @Test
     public void getAllTest(){
         BookController bookController = new BookController();
-        Assert.notEmpty(bookController.getAll(null));
+        assertEquals(bookController.getAll(null).size(), 3);
+    }
+
+    @Test
+    public void getByTitleTest(){
+        BookController bookController = new BookController();
+        assertEquals(bookController.getAll("O Guia").size(), 1);
     }
 }

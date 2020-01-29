@@ -3,6 +3,7 @@ package br.com.fiap.library.controller;
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
 import br.com.fiap.library.dto.CreateBookDTO;
+import br.com.fiap.library.service.BookServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,39 +18,15 @@ import java.util.stream.Collectors;
 public class BookController {
 
     List<BookDTO> bookDTOList = new ArrayList<>();
+    BookServiceImpl bookService = new BookServiceImpl();
 
     public BookController(){
-        bookDTOList.add(new BookDTO(
-                1,
-                "O Guia do Mochileiro das Galaxias",
-                100,
-                "12321321",
-                ZonedDateTime.now().minusYears(40),
-                new AutorDTO()
-        ));
-        bookDTOList.add(new BookDTO(
-                2,
-                "O Restaurante no Fim do Universo",
-                100,
-                "12321321",
-                ZonedDateTime.now().minusYears(40),
-                new AutorDTO()
-        ));
-        bookDTOList.add(new BookDTO(
-                3,
-                "A Vida, o Universo e Tudo Mais",
-                100,
-                "12321321",
-                ZonedDateTime.now().minusYears(40),
-                new AutorDTO()
-        ));
+
     }
 
     @GetMapping
     public List<BookDTO> getAll(@RequestParam(required = false, value = "title") String titulo){
-        return bookDTOList.stream()
-                .filter(bookDTO -> titulo== null || bookDTO.getTitulo().startsWith(titulo))
-                .collect(Collectors.toList());
+        return bookService.findAll(titulo);
     }
 
     @GetMapping("{id}")

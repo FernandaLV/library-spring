@@ -3,8 +3,10 @@ package br.com.fiap.library.controller;
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
 import br.com.fiap.library.dto.CreateBookDTO;
-import br.com.fiap.library.service.BookServiceImpl;
+import br.com.fiap.library.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,11 +20,8 @@ import java.util.stream.Collectors;
 public class BookController {
 
     List<BookDTO> bookDTOList = new ArrayList<>();
-    BookServiceImpl bookService = new BookServiceImpl();
-
-    public BookController(){
-
-    }
+    @Autowired
+    private BookService bookService;
 
     @GetMapping
     public List<BookDTO> getAll(@RequestParam(required = false, value = "title") String titulo){
@@ -39,7 +38,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO create(@RequestBody CreateBookDTO createBookDTO){
+    public BookDTO create(@RequestBody @Validated CreateBookDTO createBookDTO){
         BookDTO bookDTO = new BookDTO(createBookDTO, bookDTOList.size() + 1);
         bookDTOList.add(bookDTO);
         return bookDTO;

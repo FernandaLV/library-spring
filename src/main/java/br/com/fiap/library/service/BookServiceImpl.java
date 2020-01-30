@@ -3,12 +3,14 @@ package br.com.fiap.library.service;
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
 import br.com.fiap.library.dto.CreateBookDTO;
+import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class BookServiceImpl implements BookService {
 
     List<BookDTO> bookDTOList = new ArrayList<>();

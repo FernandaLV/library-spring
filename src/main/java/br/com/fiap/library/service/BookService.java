@@ -3,6 +3,7 @@ package br.com.fiap.library.service;
 import br.com.fiap.library.dto.AutorDTO;
 import br.com.fiap.library.dto.BookDTO;
 import br.com.fiap.library.dto.CreateBookDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

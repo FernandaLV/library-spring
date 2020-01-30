@@ -30,43 +30,28 @@ public class BookController {
 
     @GetMapping("{id}")
     public BookDTO findById(@PathVariable Integer id){
-        return bookDTOList.stream()
-                .filter(bookDTO -> bookDTO.getId().equals(id))
-                .findFirst()
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return bookService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDTO create(@RequestBody @Validated CreateBookDTO createBookDTO){
-        BookDTO bookDTO = new BookDTO(createBookDTO, bookDTOList.size() + 1);
-        bookDTOList.add(bookDTO);
-        return bookDTO;
+        return bookService.create(createBookDTO);
     }
 
     @PutMapping("{id}")
     public BookDTO update(@PathVariable Integer id, @RequestBody CreateBookDTO createBookDTO){
-
-        BookDTO bookDTO = findById(id);
-        bookDTO.setTitulo(createBookDTO.getTitulo());
-        bookDTO.setDataLancamento(createBookDTO.getDataLancamento());
-        bookDTO.setQuantidadeDePaginas(createBookDTO.getQuantidadeDePaginas());
-        bookDTO.setISBN(createBookDTO.getISBN());
-
-        return bookDTO;
+        return bookService.update(id, createBookDTO);
     }
 
     @PatchMapping("{id}")
     public BookDTO update(@PathVariable Integer id, @RequestBody AutorDTO autorDTO){
-        BookDTO bookDTO = findById(id);
-        bookDTO.setAutor(autorDTO);
-        return bookDTO;
+        return bookService.update(id, autorDTO);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Integer id){
-        BookDTO bookDTO = findById(id);
-        bookDTOList.remove(bookDTO);
+        bookService.delete(id);
     }
 
 }

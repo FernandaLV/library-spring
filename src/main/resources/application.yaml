@@ -1,1 +1,5 @@
-
+spring:
+  datasource:
+    url: jbdc:h2:~/fiapdb;DB_CLOSE_ON_EXIT=FALSE
+    username: fiap
+    password: fiap

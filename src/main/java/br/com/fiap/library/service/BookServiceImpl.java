@@ -80,7 +80,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(Integer id) {
-        BookDTO bookDTO = findById(id);
-        bookDTOList.remove(bookDTO);
+
+        Book book = bookRepository.findById(id).get();
+        bookRepository.delete(book);
     }
 }

@@ -1,14 +1,21 @@
 package br.com.fiap.library.entity;
 
-import br.com.fiap.library.dto.AutorDTO;
+import br.com.fiap.library.dto.CreateBookDTO;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "TB_BOOK")
+@EntityListeners(AuditingEntityListener.class)
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
@@ -25,6 +32,23 @@ public class Book {
 
     @ManyToOne
     private Autor autor;
+
+    @Column
+    @CreatedDate
+    private Date dataCriacao;
+
+    @Column
+    @LastModifiedDate
+    private Date dataAtualizacao;
+
+    public Book(){}
+
+    public Book(CreateBookDTO createBookDTO) {
+        this.titulo = createBookDTO.getTitulo();
+        this.quantidadeDePaginas = createBookDTO.getQuantidadeDePaginas();
+        this.ISBN = createBookDTO.getISBN();
+        this.dataLancamento = createBookDTO.getDataLancamento();
+    }
 
     public Integer getId() {
         return id;
@@ -72,5 +96,21 @@ public class Book {
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Date getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(Date dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 }

@@ -1,6 +1,9 @@
 package br.com.fiap.library.dto;
 
+import br.com.fiap.library.entity.Book;
+
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class BookDTO {
 
@@ -10,6 +13,8 @@ public class BookDTO {
     private String ISBN;
     private ZonedDateTime dataLancamento;
     private AutorDTO autor;
+    private Date dataCriacao;
+    private Date dataAtualizacao;
 
     public BookDTO(){}
 
@@ -28,6 +33,19 @@ public class BookDTO {
         this.quantidadeDePaginas = createBookDTO.getQuantidadeDePaginas();
         this.ISBN = createBookDTO.getISBN();
         this.dataLancamento = createBookDTO.getDataLancamento();
+    }
+
+    public BookDTO(Book book) {
+        this.id = book.getId();
+        this.titulo = book.getTitulo();
+        this.quantidadeDePaginas = book.getQuantidadeDePaginas();
+        this.ISBN = book.getISBN();
+        this.dataLancamento = book.getDataLancamento();
+        this.dataCriacao = book.getDataCriacao();
+        this.dataAtualizacao = book.getDataAtualizacao();
+        if (book.getAutor() != null) {
+            this.autor = new AutorDTO(book.getAutor());
+        }
     }
 
     public Integer getId() {
@@ -78,4 +96,19 @@ public class BookDTO {
         this.autor = autor;
     }
 
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Date getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(Date dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 }

@@ -7,8 +7,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  security:
-    user:
-      name: admin
-      password: admin
-      roles: ADMIN
+jwt:
+  secret: fiapsecretejwt
+  expire: 1

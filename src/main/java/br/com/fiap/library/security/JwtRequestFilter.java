@@ -25,21 +25,24 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         String requestToken = request.getHeader("Authorization");
 
-        if (requestToken == null || !requestToken.startsWith("Bearer ")) {
-            throw new IllegalAccessError("Invalid Token");
-        }
+        if (requestToken != null || requestToken.startsWith("Bearer ")) {
 
-        String username = jwtTokenUtil.getUsername(requestToken);
+            String username = jwtTokenUtil.getUsername(requestToken);
 
-        if (username != null) {
-            UserDetails userDetails = jwtUserService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            if (username != null) {
+                UserDetails userDetails = jwtUserService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        } else {
+            logger.info("Invalid token");
         }
 
         filterChain.doFilter(request, response);

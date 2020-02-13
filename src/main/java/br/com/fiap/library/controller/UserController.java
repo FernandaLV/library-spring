@@ -16,6 +16,10 @@ public class UserController {
 
     private UserService userService;
 
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
     @PostMapping("/login")
     public JwtDTO login(@RequestBody AuthDTO authDTO) {
         return userService.login(authDTO);

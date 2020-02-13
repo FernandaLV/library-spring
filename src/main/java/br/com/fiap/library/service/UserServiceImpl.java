@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO create(CreateUserDTO createUserDTO) {
         User user = new User();
         user.setUsername(createUserDTO.getUsername());
-        user.setPassword( passwordEncoder.encode(user.getPassword()));
+        user.setPassword( passwordEncoder.encode(createUserDTO.getPassword()));
 
         User savedUser = userRepository.save(user);
 
